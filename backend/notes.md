@@ -1,0 +1,2 @@
+- Erweiterung: Pricing-System (Buchshop)
+- Verleihfunktion
