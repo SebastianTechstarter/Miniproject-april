@@ -1,2 +1,3 @@
 - Erweiterung: Pricing-System (Buchshop)
 - Verleihfunktion
+- Switch zwischen Dark/ Lightmode
