@@ -219,6 +219,10 @@ body {
     background-color: #333;
     color: #eee;
   }
+
+  body.dark .button-row button:hover {
+    background-color:#3c3c3c;
+  }
   
   body.dark .eingabe,
   body.dark .alle-buecher {
