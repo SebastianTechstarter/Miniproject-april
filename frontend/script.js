@@ -5,34 +5,52 @@ const pages = document.getElementById("pages");
 const publisher = document.getElementById("publisher");
 const year = document.getElementById("year");
 const category = document.getElementById("category");
+const title = document.getElementById("title");
 
 // Button Variablen
-const saveBook = document.getElementById("save");
+const saveBook = document.getElementById("saveBook");
 const deleteBook = document.getElementById("delete");
-const searchBook = document.getElementById("search");
+const searchBook = document.getElementById("searchBook");
 const listAllBook = document.getElementById("listAll");
 
 // Button Funktionen
+
+//searchBook.addEventListener("click", () => {
+// fetch("/books" + title.value);
+//});
+
 saveBook.addEventListener("click", () => {
-  if (methodSelect.value == "create") {
-    createbooks();
-  } else if (methodSelect.value == "change") {
-    changebooks();
-  } else if (methodSelect.value == "delete") {
-    deletebooks();
-  }
+  if (title.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
+  else if (author.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
+  else if (pages.value < 2)
+    alert("Seitenanzahl muss mind. 2 Zahlen beinhalten!");
+  else if (publisher.value < 1)
+    alert("Name muss mind. 1 Buchstaben beinhalten!");
+  else if (year.value < 4)
+    alert("Jahresangabe muss mind. 4 Zahlen beinhalten!");
+  else if (category.value < 1)
+    alert("Name muss mind. 1 Buchstaben beinhalten!");
+  else
+    fetch("/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: title.value,
+        author: author.value,
+        pages: pages.value,
+        publisher: publisher.value,
+        year: year.value,
+        category: category.value,
+      }),
+    });
+  alert("Erfolgreich gespeichert!");
 });
 
 // Eingabe Funktionen
-methodSelect.addEventListener("change", () => {
-  if (methodSelect.value == "create") {
-    idInput.style.display = "none";
-  } else if (methodSelect.value == "change") {
-    idInput.style.display = "block";
-  } else if (methodSelect.value == "delete") {
-    idInput.style.display = "block";
-  }
-});
+//methodSelect.addEventListener("inputSpace", () => {
+//  if (methodSelect.value == "search") {
+//    idInput.style.display = "none";
+//  }});
 
 // Browser Aktionen
 window.onload = () => {
@@ -41,7 +59,7 @@ window.onload = () => {
 
 function refreshList() {
   listAllBook.innerHTML = "";
-  fetch("http://localhost:5500/books")
+  fetch("/books")
     .then((res) => res.json())
     .then((data) => {
       data.forEach((element) => {
@@ -51,3 +69,5 @@ function refreshList() {
       });
     });
 }
+
+//suchen auflisten speichern ändern löschen
