@@ -18,17 +18,19 @@ function writeData(data) {
     fs.writeFileSync("daten.json", JSON.stringify(data, null, 2));
 }
 
-// GET /books
+// GET /books: Suche nach einem bestimmten Buch
 app.get("/books", (req, res) => {
     try {
         let books = readData();
         res.status(200).json(books);
-    } catch (err) {
+    }
+
+    catch (err) {
         res.status(500).json({error: `Eintrag nicht gefunden ${err}`});
     }
 });
 
-// POST /books
+// POST /books: Neue Bücher hinzufügen
 app.post("/books", (req, res) => {
     try {
         let books = readData(); //bestehende Bücher laden
@@ -59,6 +61,32 @@ app.post("/books", (req, res) => {
         res.status(500).json({error: `Fehler beim Speichern des Buches: ${err.message}`});
     }
 });
+
+// DELETE /books: Buch löschen
+app.delete("/books/:id", (req, res) => {
+    try {
+        let books = readData();
+        // ID aus der URL in eine verrechenbare Zahl umwandeln:
+        const bookId = parseInt(req.params.id); 
+
+        // Existiert das Buch?
+        const bookIndex = books.findIndex(book => book.id === bookId);
+        // Wenn das Buch nicht existiert, wird die Position "-1" ausgegeben
+        if (bookIndex === -1) {
+            return res.status(404).json({error: "Buch nicht gefunden!"});
+        }
+        const deletedBook = books.splice(bookIndex, 1)[0];
+
+        writeData(books);
+        res.status(200).json({message: "Buch gelöscht", book: deletedBook});
+    }
+    catch(err) {
+        res.status(500).json({error: `Fehler beim Löschen des Buchs: ${err.message}`});
+    }
+});
+
+// GET /books: Alle Bücher auflisten
+
 
 app.listen(5500, () => {
     console.log("Der Server läuft nun auf Port 5500...")

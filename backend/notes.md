@@ -1,5 +1,6 @@
 - Erweiterung: Pricing-System (Buchshop)
 - Verleihfunktion
+- Login-Funktion
 - Switch zwischen Dark/ Lightmode
 
  {
@@ -11,3 +12,4 @@
         "year": "",
         "category": ""
     }
+
