@@ -7,33 +7,40 @@ body {
     background-attachment: fixed;
     background-position: center;
     min-height: 100vh;
+    display: flex;
   }
   
+  .leere {
+    flex: 3;
+  }
+
   .overlay {
     padding: 60px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    flex: 4;
   }
-  
+
   h1 {
-    color: #2c2c2c;
+    color:#333;
     font-size: 28px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 5px;
+    margin-top: 5px;
   }
   
   p {
     text-align: center;
     color: #555;
-    font-size: 16px;
+    font-size: large;
     margin-bottom: 20px;
   }
   
-  .form-card,
-  .book-output-card {
+  .eingabe,
+  .alle-buecher {
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 24px;
     padding: 30px;
@@ -46,7 +53,7 @@ body {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border-radius: 25px;
+    border-radius: 15px;
     border: 1px solid #ccc;
     font-size: 14px;
     text-align: center;
@@ -59,6 +66,7 @@ body {
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 16px;
+    color: #333;
   }
   
   .flex-row {
@@ -67,22 +75,51 @@ body {
   }
   
   .flex-row input {
+    flex: 2;
+  }
+
+  .flex-row.erste-reihe input:first-child {
+    flex: 5;
+  }
+  
+  .flex-row.erste-reihe input:last-child {
+    flex: 1;
+  }
+
+  .flex-row.zweite-reihe input:first-child {
     flex: 1;
   }
   
-  .button-row {
+  .flex-row.zweite-reihe input:last-child {
+    flex: 5;
+  }
+  
+  .button {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     width: 100%;
-    justify-content: space-between;
-    margin-top: 20px;
+    max-width: 500px;
+  }
+  
+  .button-row.top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
   
-  button {
-    flex: 1;
+  .button-row.bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .button-row button {
+    width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 25px;
+    color: #333;
+    border-radius: 15px;
     background-color: #ffffff;
     font-size: 15px;
     cursor: pointer;
@@ -90,14 +127,15 @@ body {
     transition: background 0.3s, transform 0.1s;
   }
   
-  button:hover {
+  .button-row button:hover {
     background-color: #eaeaea;
     transform: scale(1.02);
   }
   
-  #bookList {
+  #buchliste {
     margin-top: 10px;
     text-align: center;
     color: #333;
     font-size: 15px;
   }
+  
