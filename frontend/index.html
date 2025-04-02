@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>library</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <h2>Meine Bücherei - Verwaltung für den eigenen Haushalt</h2>
-    <div id="inputSpace">
-      <input type="text" id="author" placeholder="Autor" />
-      <input type="text" id="title" placeholder="Titel" />
-      <input type="text" id="pages" placeholder="Seiten" />
-      <input type="text" id="publisher" placeholder="Verlag" />
-      <input type="text" id="year" placeholder="Erscheinungsjahr" />
-      <input type="text" id="category" placeholder="Kategorie" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="overlay">
+    <div class="form-card">
+      <h1>Meine Bücherei</h1>
+      <p>Verwaltung für den eigenen Haushalt</p>
+      <form id="bookForm">
+        <div class="flex-row">
+          <input type="text" id="title" placeholder="Titel des Buches" />
+        </div>
+        <div class="flex-row">
+          <input type="text" id="author" placeholder="Autor" />
+          <input type="number" id="year" placeholder="Jahr" />
+        </div>
+        <div class="flex-row">
+          <input type="number" id="pages" placeholder="Seiten" />
+          <input type="text" id="publisher" placeholder="Verlag" />
+        </div>
+        <select id="category">
+          <option value="">Kategorie wählen</option>
+          <option>Roman</option>
+          <option>Fachbuch</option>
+          <option>Biografie</option>
+          <option>Science-Fiction</option>
+          <option>Kinderbuch</option>
+        </select>
+      </form>
     </div>
-    <button id="safeBook">Speichern</button>
-    <button id="deleteBook">Löschen</button>
-    <button id="searchBook">Suchen</button>
-    <button id="listAllBook">Alle auflisten</button>
-  </body>
+    <div class="flex-row">
+      <div class="button-row">
+      <button id="safeBook">Speichern</button>
+      <button id="deleteBook">Löschen</button>
+      <button id="searchBook">Suchen</button>
+      <button id="listAllBook">Alle auflisten</button>
+    </div>
+    <div class="book-output-card">
+      <div id="bookList"></div>
+    </div>
+  </div>
+</body>
 </html>
