@@ -2,8 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buchverwaltung</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>library</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
 </head>
@@ -35,10 +35,11 @@
       </form>
     </div>
     <div class="flex-row">
-    <div class="button-row">
-        <button type="button" id="search">Suchen</button>
-        <button type="submit" id="save">Speichern</button>
-      </div>
+      <div class="button-row">
+      <button id="safeBook">Speichern</button>
+      <button id="deleteBook">Löschen</button>
+      <button id="searchBook">Suchen</button>
+      <button id="listAllBook">Alle auflisten</button>
     </div>
     <div class="book-output-card">
       <div id="bookList"></div>
