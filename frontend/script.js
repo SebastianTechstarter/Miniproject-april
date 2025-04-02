@@ -71,3 +71,25 @@ function refreshList() {
 }
 
 //suchen auflisten speichern ändern löschen
+
+//Light-Dark Modus
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("modeSwitch");
+  const body = document.body;
+
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark");
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener("change", () => {
+    body.classList.toggle("dark");
+
+    if (body.classList.contains("dark")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+    }
+  });
+});
