@@ -1,11 +1,11 @@
 [
-    {
-        "id": 1,
-        "author": "",
-        "title": "",
-        "pages": "",
-        "publisher": "",
-        "year": "",
-        "category": ""
-    }
+  {
+    "id": 1,
+    "title": "Der Herr der Ringe - die Gefährten",
+    "author": "Tolkien",
+    "pages": "380",
+    "publisher": "Klett",
+    "year": "1937",
+    "category": "Roman"
+  }
 ]
