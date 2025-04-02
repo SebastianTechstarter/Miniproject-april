@@ -78,20 +78,12 @@ body {
     flex: 2;
   }
 
-  .flex-row.erste-reihe input:first-child {
+  .flex-row.platz input:first-child {
     flex: 5;
   }
   
-  .flex-row.erste-reihe input:last-child {
+  .flex-row.platz input:last-child {
     flex: 1;
-  }
-
-  .flex-row.zweite-reihe input:first-child {
-    flex: 1;
-  }
-  
-  .flex-row.zweite-reihe input:last-child {
-    flex: 5;
   }
   
   .button {
