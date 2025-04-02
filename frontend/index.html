@@ -8,20 +8,21 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="leere"></div>
   <div class="overlay">
-    <div class="form-card">
+    <div class="eingabe">
       <h1>Meine Bücherei</h1>
       <p>Verwaltung für den eigenen Haushalt</p>
       <form id="bookForm">
         <div class="flex-row">
           <input type="text" id="title" placeholder="Titel des Buches" />
         </div>
-        <div class="flex-row">
+        <div class="flex-row erste-reihe">
           <input type="text" id="author" placeholder="Autor" />
-          <input type="number" id="year" placeholder="Jahr" />
-        </div>
-        <div class="flex-row">
           <input type="number" id="pages" placeholder="Seiten" />
+        </div>
+        <div class="flex-row zweite-reihe">
+          <input type="number" id="year" placeholder="Jahr" />
           <input type="text" id="publisher" placeholder="Verlag" />
         </div>
         <select id="category">
@@ -30,19 +31,24 @@
           <option>Fachbuch</option>
           <option>Biografie</option>
           <option>Science-Fiction</option>
+          <option>Fantasy</option>
           <option>Kinderbuch</option>
         </select>
       </form>
     </div>
-    <div class="flex-row">
-      <div class="button-row">
-      <button id="saveBook">Speichern</button>
-      <button id="deleteBook">Löschen</button>
-      <button id="searchBook">Suchen</button>
-      <button id="listAllBook">Alle auflisten</button>
+    <div class="button">
+      <div class="button-row top">
+        <button id="searchBook">Suchen</button>
+        <button id="listAllBook">Alle auflisten</button>
+      </div>
+      <div class="button-row bottom">
+        <button id="saveBook">Speichern</button>
+        <button id="editBook">Bearbeiten</button>
+        <button id="deleteBook">Löschen</button>
+      </div>
     </div>
-    <div class="book-output-card">
-      <div id="bookList"></div>
+    <div class="alle-buecher ">
+      <div id="buchliste"></div>
     </div>
   </div>
 </body>
