@@ -106,5 +106,23 @@
     "publisher": "Blabla",
     "year": "2002",
     "category": "Kinderbuch"
+  },
+  {
+    "id": 13,
+    "title": "dddddd",
+    "author": "dddddddd",
+    "pages": "450",
+    "publisher": "Blabla",
+    "year": "1985",
+    "category": "Roman"
+  },
+  {
+    "id": 14,
+    "title": "fru",
+    "author": "tester",
+    "pages": "3000",
+    "publisher": "test gmbh",
+    "year": "1958",
+    "category": "Satire"
   }
 ]
