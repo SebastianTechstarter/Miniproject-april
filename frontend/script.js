@@ -40,32 +40,27 @@ document.addEventListener("DOMContentLoaded", () => {
 searchBook.addEventListener("click", () => {
   if (titleInput === title) {
     return { buchliste };
-  }
-  elif (authorInput === author) {
+  } else if (authorInput === author) {
     return { buchliste };
-  }
-  elif (pagesInput === pages) {
+  } else if (pagesInput === pages) {
     return { buchliste };
-  }
-  elif (publisherInput === publisher) {
+  } else if (publisherInput === publisher) {
     return { buchliste };
-  }
-  elif (yearInput === year) {
+  } else if (yearInput === year) {
     return { buchliste };
-  }
-  elif (categorySelect === category) {
+  } else if (categorySelect === category) {
     return { buchliste };
-  }
-  else
-    fetch("/books")
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((element) => {
-        let listAllBook = document.createElement("li");
-          listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-          buchliste.appendChild(listAllBook);
-      });
-    })
+  } else
+    method: "GET",
+      fetch("/books")
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((element) => {
+            let listAllBook = document.createElement("li");
+            listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+            buchliste.appendChild(listAllBook);
+          });
+        });
 });
 
 listAllBook.addEventListener("click", () => {
