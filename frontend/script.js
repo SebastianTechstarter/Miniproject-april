@@ -37,6 +37,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Button Funktionen
 
+searchBook.addEventListener("click", () => {
+  if (titleInput === title) {
+    return { buchliste };
+  } else if (authorInput === author) {
+    return { buchliste };
+  } else if (pagesInput === pages) {
+    return { buchliste };
+  } else if (publisherInput === publisher) {
+    return { buchliste };
+  } else if (yearInput === year) {
+    return { buchliste };
+  } else if (categorySelect === category) {
+    return { buchliste };
+  } else
+    method: "GET",
+      fetch("/books")
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((element) => {
+            let listAllBook = document.createElement("li");
+            listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+            buchliste.appendChild(listAllBook);
+          });
+        });
+});
+
+listAllBook.addEventListener("click", () => {
+  return { refreshList };
+});
+
 saveBook.addEventListener("click", () => {
   if (title.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
   else if (author.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
@@ -50,7 +80,7 @@ saveBook.addEventListener("click", () => {
     alert("Name muss mind. 1 Buchstaben beinhalten!");
   else
     fetch("/books", {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title.value,
@@ -70,7 +100,14 @@ function changeBook() {
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ art: artInput.value }),
+      body: JSON.stringify({
+        title: title.value,
+        author: author.value,
+        pages: pages.value,
+        publisher: publisher.value,
+        year: year.value,
+        category: category.value,
+      }),
     }
   )
     .then((res) => res.json())
@@ -81,7 +118,8 @@ function changeBook() {
   alert("Erfolgreich geäandert!");
 }
 
-function deleteBook() {
+function deletedBook() {
+
   fetch(`/books/${bookID(titleInput)}`, {
     method: "DELETE",
   })
@@ -105,17 +143,18 @@ window.onload = () => {
 };
 
 function refreshList() {
+  buchliste.innerHTML = "";
   fetch("/books")
     .then((res) => res.json())
     .then((data) => {
       data.forEach((element) => {
-        let newListItem = document.createElement("li");
-        newListItem.innerText = `${element.id}: ${element.author} ${element.title} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-        liste.appendChild(newListItem);
+        let listAllBook = document.createElement("li");
+        listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+        buchliste.appendChild(listAllBook);
       });
     });
 }
 
-//suchen auflisten speichern ändern löschen
-// WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aus aufrufen.
+// WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aufrufen.
 // Mit der Middleware: app.use(express.static(path.join(__dirname, "../frontend"))); starten wir das Frontend stets über das Backand!
+// GoLive deaktivieren und in URL-Zeile des Browser nur http://127.0.0.1:5500/ eingeben.
