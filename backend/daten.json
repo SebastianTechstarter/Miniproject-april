@@ -79,5 +79,32 @@
     "publisher": "test",
     "year": "1955",
     "category": "Fantasy"
+  },
+  {
+    "id": 10,
+    "title": "tra",
+    "author": "dsssss",
+    "pages": "450",
+    "publisher": "Blabla",
+    "year": "1997",
+    "category": "Fantasy"
+  },
+  {
+    "id": 11,
+    "title": "testneu",
+    "author": "tester",
+    "pages": "400",
+    "publisher": "disney",
+    "year": "2002",
+    "category": "Biografie"
+  },
+  {
+    "id": 12,
+    "title": "hai",
+    "author": "lynch",
+    "pages": "4440",
+    "publisher": "Blabla",
+    "year": "2002",
+    "category": "Kinderbuch"
   }
 ]
