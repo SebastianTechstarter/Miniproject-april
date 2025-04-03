@@ -23,31 +23,25 @@ function writeData(data) {
 app.get("/search/books", (req, res) => {
     try {
         let {title, author, pages, publisher, year, category} = req.query;
-        // console.log(year)
-        let filteredBooks = readData();
-        // console.log(filteredBooks);
-        filteredBooks = filteredBooks.filter(book => {
-            if (book.year === year) {
-                return true;
-            }
-            if (book.title === title) {
-                return true;
-            }
-            if (book.author === author) {
-                return true;
-            }
-            if (book.pages === pages) {
-                return true;
-            }
-            if (book.publisher === publisher) {
-                return true;
-            }
-            if (book.category === category) {
-                return true;
-            }
+        let books = readData();
+        // flexible Suche
+        books = books.filter(book => {
+            return (
+                (!year || book.year.toString().includes(year)) &&
+                (!title || book.title.toLowerCase().includes(title.toLowerCase())) &&
+                (!author || book.author.toLowerCase().includes(author.toLowerCase())) &&
+                (!pages || book.pages.toString() === pages) &&
+                (!publisher || book.publisher.toLowerCase().includes(publisher.toLowerCase())) &&
+                (!category || book.category.toLowerCase().includes(category.toLowerCase()))
+            )
+            
         });
-        console.log(filteredBooks);
-        res.status(200).json(filteredBooks);
+
+        if(books.length === 0) {
+            return res.status(404).json({message: "Keine Bücher gefunden"})
+        }
+        
+        res.status(200).json(books);
     }
 
     catch (err) {
@@ -68,15 +62,25 @@ app.post("/books", (req, res) => {
         .json({ error: "Eingaben unvollständig. Bitte alle Felder füllen!" });
     }
 
-    // ID generieren
+    // Auf Duplikate prüfen
+    const duplicate = books.find(book => 
+        book.title.toLowerCase() === title.toLowerCase() &&
+        book.author.toLowerCase() === author.toLowerCase()
+    );
+
+    if (duplicate) {
+        return res.status(409).json({error: "Dieses Buch existiert bereits!"});
+    }
+    // ID generieren (die höchste ID wird ermittelt. Wenn keine existieren, wird "1" vergeben)
+    const newId = books.length > 0 ? Math.max(...books.map(book => book.id)) +1:1;
     const newBook = {
-      id: books.length ? books[books.length - 1].id + 1 : 1,
-      title: title,
-      author: author,
-      pages: pages,
-      publisher: publisher,
-      year: year,
-      category: category,
+        id: newId,
+        title,
+        author,
+        pages,
+        publisher,
+        year,
+        category,
     };
 
     books.push(newBook);
@@ -91,26 +95,32 @@ app.post("/books", (req, res) => {
 });
 
 // DELETE /books: Buch löschen
-app.delete("/books/:id", (req, res) => {
+app.delete("/books", (req, res) => {
   try {
+    let { title, author, pages, publisher, year, category } = req.query;
     let books = readData();
-    // ID aus der URL in eine verrechenbare Zahl umwandeln:
-    const bookId = parseInt(req.params.id);
 
-    // Existiert das Buch?
-    const bookIndex = books.findIndex((book) => book.id === bookId);
-    // Wenn das Buch nicht existiert, wird die Position "-1" ausgegeben
-    if (bookIndex === -1) {
-      return res.status(404).json({ error: "Buch nicht gefunden!" });
+    const filteredBooks = books.filter(book => {
+        return !(
+            (!year || book.year.toString().includes(year)) &&
+            (!title || book.title.toLowerCase().includes(title.toLowerCase())) &&
+            (!author || book.author.toLowerCase().includes(author.toLowerCase())) &&
+            (!pages || book.pages.toString() === pages) &&
+            (!publisher || book.publisher.toLowerCase().includes(publisher.toLowerCase())) &&
+            (!category || book.category.toLowerCase().includes(category.toLowerCase()))
+        );
+    });
+    
+    // Wenn kein passendes Buch gefunden
+    if (books.length === filteredBooks.length) {
+        return res.status(404).json({message: "Kein passendes Buch gefunden!"});
     }
-    const deletedBook = books.splice(bookIndex, 1)[0];
 
-    writeData(books);
-    res.status(200).json({ message: "Buch gelöscht", book: deletedBook });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ error: `Fehler beim Löschen des Buchs: ${err.message}` });
+    writeData(filteredBooks);
+    res.status(200).json({ message: "Buch gelöscht", deletedCount: books.length - filteredBooks.length});
+  } 
+  catch (err) {
+    res.status(500).json({ error: `Fehler beim Löschen des Buchs: ${err.message}` });
   }
 });
 
@@ -131,31 +141,40 @@ app.get("/books", (req, res) => {
   }
 });
 
-// PUT /books/:id: Einzelne Daten überschreiben
-app.put("books/:id", (req, res) => {
-  try {
-    const bookId = parseInt(req.params.id);
-    let books = readData();
+// PUT /books: Einzelne Daten überschreiben
+app.put("/books", (req, res) => {
+    try {
+        let {title, author, pages, publisher, year, category} = req.query;
+        let books = readData();
 
-    const bookIndex = books.findIndex((book) => book.id === bookId);
-    if (bookIndex === -1) {
-      return res
-        .status(404)
-        .json({ error: "Dieses Buch existiert nicht in der Liste" });
+        // Suche nach den Büchern, die den Kriterien entsprechen
+        let updatedBooks = [];
+        books = books.map(book => {
+            if (
+                (!year || book.year.toString().includes(year)) &&
+                (!title || book.title.toLowerCase().includes(title.toLowerCase())) &&
+                (!author || book.author.toLowerCase().includes(author.toLowerCase())) &&
+                (!pages || book.pages.toString() == pages) &&
+                (!publisher || book.publisher.toLowerCase().includes(publisher.toLowerCase())) &&
+                (!category || book.category.toLowerCase().includes(category.toLowerCase()))
+            ) {
+                let updatedBook = { ...book, ...req.body};
+                updatedBooks.push(updatedBook);
+                return updatedBook
+            }
+            return book;
+        });
+    
+        if(updatedBooks === 0) {
+            return res.status(404).json({message: "Kein passendes Buch gefunden!"})
+        }
+
+        writeData(books);
+        res.status(200).json({ message: "Buch aktualisiert", updatedBooks});
+    } 
+    catch (err) {
+    res.status(500).json({ error: `Fehler beim Aktualisieren des Buchs: ${err.message}` });
     }
-
-    // Felder aus dem req.body werden überschrieben:
-    books[bookIndex] = { ...books[bookIndex], ...req.body };
-    writeData(books);
-    res.status(200).json({
-      message: "Buch aktualisiert",
-      book: books[bookIndex],
-    });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ error: `Fehler beim Aktualisieren des Buchs: ${err.message}` });
-  }
 });
 
 app.listen(5500, () => {
