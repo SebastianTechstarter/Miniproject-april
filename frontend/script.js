@@ -41,21 +41,31 @@ searchBook.addEventListener("click", () => {
   if (titleInput === title) {
     return { buchliste };
   }
-  if (authorInput === author) {
+  elif (authorInput === author) {
     return { buchliste };
   }
-  if (pagesInput === pages) {
+  elif (pagesInput === pages) {
     return { buchliste };
   }
-  if (publisherInput === publisher) {
+  elif (publisherInput === publisher) {
     return { buchliste };
   }
-  if (yearInput === year) {
+  elif (yearInput === year) {
     return { buchliste };
   }
-  if (categorySelect === category) {
+  elif (categorySelect === category) {
     return { buchliste };
   }
+  else
+    fetch("/books")
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((element) => {
+        let listAllBook = document.createElement("li");
+          listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+          buchliste.appendChild(listAllBook);
+      });
+    })
 });
 
 listAllBook.addEventListener("click", () => {
@@ -75,7 +85,7 @@ saveBook.addEventListener("click", () => {
     alert("Name muss mind. 1 Buchstaben beinhalten!");
   else
     fetch("/books", {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title.value,
