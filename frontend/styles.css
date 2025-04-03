@@ -68,7 +68,25 @@ body {
     background-position: right 12px center;
     background-size: 16px;
     color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
   }
+
+  optgroup {
+    font-size: larger;
+    align-items: center;
+  }
+
+  select option, select optgroup {
+    text-align: center;
+  }
+
   
   .flex-row {
     display: flex;
@@ -131,18 +149,30 @@ body {
     font-size: 15px;
   }
 
+  .shop-button {
+    background-color: #ffffff;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ccc;
+  }
+  
+  .shop-button:hover {
+    background-color: #f0f0f0;
+  }
+
   .theme-toggle {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 10px;
     margin-bottom: 10px;
     color: #333;
   }
-  
-  body.dark .theme-toggle {
-    color: #eee;
-  }
+
   
   .switch {
     position: relative;
@@ -220,6 +250,10 @@ body {
     color: #eee;
   }
 
+    body.dark .theme-toggle {
+    color: #eee;
+  }
+
   body.dark .button-row button:hover {
     background-color:#3c3c3c;
   }
@@ -228,3 +262,14 @@ body {
   body.dark .alle-buecher {
     background-color: rgba(30, 30, 30, 0.85);
   }
+
+  body.dark .shop-button {
+    background-color: rgba(30, 30, 30, 0.85);
+    color: #eee;
+    border: 1px solid #444;
+  }
+  
+  body.dark .shop-button:hover {
+    background-color: rgba(50, 50, 50, 0.95);
+  }
+  
