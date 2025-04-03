@@ -1,9 +1,10 @@
 const express = require("express");
 const fs = require("fs");
-const axios = require("axios");
 const app = express();
 const path = require("path");
 const { error } = require("console");
+const { title } = require("process");
+const { publicDecrypt } = require("crypto");
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend")));
@@ -19,13 +20,39 @@ function writeData(data) {
 }
 
 // GET /books: Suche nach einem bestimmten Buch
-app.get("/books", (req, res) => {
-  try {
-    let books = readData();
-    res.status(200).json(books);
-  } catch (err) {
-    res.status(500).json({ error: `Eintrag nicht gefunden ${err}` });
-  }
+app.get("/search/books", (req, res) => {
+    try {
+        let {title, author, pages, publisher, year, category} = req.query;
+        // console.log(year)
+        let filteredBooks = readData();
+        // console.log(filteredBooks);
+        filteredBooks = filteredBooks.filter(book => {
+            if (book.year === year) {
+                return true;
+            }
+            if (book.title === title) {
+                return true;
+            }
+            if (book.author === author) {
+                return true;
+            }
+            if (book.pages === pages) {
+                return true;
+            }
+            if (book.publisher === publisher) {
+                return true;
+            }
+            if (book.category === category) {
+                return true;
+            }
+        });
+        console.log(filteredBooks);
+        res.status(200).json(filteredBooks);
+    }
+
+    catch (err) {
+        res.status(500).json({error: `Eintrag nicht gefunden ${err}`});
+    }
 });
 
 // POST /books: Neue Bücher hinzufügen
