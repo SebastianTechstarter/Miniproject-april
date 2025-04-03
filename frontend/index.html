@@ -12,13 +12,18 @@
   <div class="overlay">
     <div class="eingabe">
       <div class="theme-toggle">
-        <span>Light</span>
-        <label class="switch">
-          <input type="checkbox" id="modeSwitch" />
-          <span class="slider"></span>
-        </label>
-        <span>Dark</span>
-      </div>      
+        <a href="../shop/shop.html" class="shop-button">
+          <img src="./img/shop.png" height="22px" width="22px">
+        </a>
+        <div class="theme-toggle">
+          <span>Light</span>
+          <label class="switch">
+            <input type="checkbox" id="modeSwitch" />
+            <span class="slider"></span>
+          </label>
+          <span>Dark</span>
+        </div>
+      </div>              
       <h1>Meine Bücherei</h1>
       <p>Verwaltung für den eigenen Haushalt</p>
       <form id="bookForm">
@@ -34,13 +39,110 @@
           <input type="number" id="year" placeholder="Jahr" />
         </div>
         <select id="category">
-          <option value="">Kategorie wählen</option>
-          <option>Roman</option>
-          <option>Fachbuch</option>
-          <option>Biografie</option>
-          <option>Science-Fiction</option>
-          <option>Fantasy</option>
-          <option>Kinderbuch</option>
+          <option value="" disabled selected hidden>Kategorie wählen</option>
+          <optgroup label="Belletristik">
+            <option>Abenteuer</option>
+            <option>Drama</option>
+            <option>Dystopie</option>
+            <option>Erzählungen</option>
+            <option>Fantasy</option>
+            <option>Gesellschaftsroman</option>
+            <option>Historisch</option>
+            <option>Horror</option>
+            <option>Klassiker</option>
+            <option>Liebesroman</option>
+            <option>Mystery</option>
+            <option>Novelle</option>
+            <option>Roman</option>
+            <option>Satire</option>
+            <option>Thriller</option>
+          </optgroup>
+
+          <optgroup label="Sach- & Fachbücher">
+            <option>Biografie</option>
+            <option>Bildung & Pädagogik</option>
+            <option>Esoterik</option>
+            <option>Fachbuch</option>
+            <option>Finanzen</option>
+            <option>Geschichte</option>
+            <option>Gesellschaft</option>
+            <option>Jura & Recht</option>
+            <option>Memoiren</option>
+            <option>Philosophie</option>
+            <option>Politik</option>
+            <option>Psychologie</option>
+            <option>Ratgeber</option>
+            <option>Religion</option>
+            <option>Selbsthilfe</option>
+            <option>Soziologie</option>
+            <option>Spiritualität</option>
+            <option>True Crime</option>
+            <option>Wirtschaft</option>
+          </optgroup>
+
+          <optgroup label="Wissenschaft & Technik">
+            <option>Datenanalyse</option>
+            <option>Elektrotechnik</option>
+            <option>Informatik</option>
+            <option>IT-Sicherheit</option>
+            <option>Künstliche Intelligenz</option>
+            <option>Maschinenbau</option>
+            <option>Mathematik</option>
+            <option>Medizin</option>
+            <option>Naturwissenschaften</option>
+            <option>Robotik</option>
+            <option>Technik</option>
+            <option>Webentwicklung</option>
+            <option>App-Programmierung</option>
+            <option>Open Source</option>
+          </optgroup>
+
+          <optgroup label="Kunst & Kultur">
+            <option>Architektur</option>
+            <option>Comic</option>
+            <option>Design</option>
+            <option>Filmwissenschaft</option>
+            <option>Fotografie</option>
+            <option>Graphic Novel</option>
+            <option>Kunst</option>
+            <option>Musik</option>
+            <option>Photographie</option>
+            <option>Poesie</option>
+            <option>Tanz</option>
+            <option>Theater</option>
+          </optgroup>
+
+          <optgroup label="Alltag & Leben">
+            <option>Do it yourself</option>
+            <option>Ernährung</option>
+            <option>Familie & Erziehung</option>
+            <option>Garten</option>
+            <option>Haustiere</option>
+            <option>Humor</option>
+            <option>Kochbuch</option>
+            <option>Minimalismus</option>
+            <option>Nachhaltigkeit</option>
+            <option>Reiseführer</option>
+            <option>Schwangerschaft & Geburt</option>
+            <option>Umwelt</option>
+          </optgroup>
+
+          <optgroup label="Kinder & Jugend">
+            <option>Jugendbuch</option>
+            <option>Kinderbuch</option>
+            <option>Manga</option>
+            <option>Kreatives Schreiben</option>
+          </optgroup>
+
+          <optgroup label="Diverses">
+            <option>Audio-Bücher</option>
+            <option>LGBTQ+</option>
+            <option>Tagebücher</option>
+            <option>Zitate & Sprüche</option>
+            <option>Kritik</option>
+            <option>Kurioses & Skurriles</option>
+          </optgroup>
+
         </select>
       </form>
     </div>
