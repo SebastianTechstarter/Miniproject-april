@@ -119,6 +119,7 @@ function changeBook() {
 }
 
 function deletedBook() {
+
   fetch(`/books/${bookID(titleInput)}`, {
     method: "DELETE",
   })
