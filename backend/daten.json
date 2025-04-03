@@ -43,5 +43,41 @@
     "publisher": "Blabla",
     "year": "1652",
     "category": "Roman"
+  },
+  {
+    "id": 6,
+    "title": "es",
+    "author": "sert",
+    "pages": "450",
+    "publisher": "Blabla",
+    "year": "1952",
+    "category": "Roman"
+  },
+  {
+    "id": 7,
+    "title": "es",
+    "author": "sert",
+    "pages": "450",
+    "publisher": "Blabla",
+    "year": "1952",
+    "category": "Roman"
+  },
+  {
+    "id": 8,
+    "title": "hai",
+    "author": "lynch",
+    "pages": "450",
+    "publisher": "Blabla",
+    "year": "1978",
+    "category": "Roman"
+  },
+  {
+    "id": 9,
+    "title": "test",
+    "author": "test",
+    "pages": "450",
+    "publisher": "test",
+    "year": "1955",
+    "category": "Fantasy"
   }
 ]
