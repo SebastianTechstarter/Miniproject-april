@@ -37,6 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Button Funktionen
 
+searchBook.addEventListener("click", () => {
+  if (titleInput === title) {
+    return { buchliste };
+  }
+  if (authorInput === author) {
+    return { buchliste };
+  }
+  if (pagesInput === pages) {
+    return { buchliste };
+  }
+  if (publisherInput === publisher) {
+    return { buchliste };
+  }
+  if (yearInput === year) {
+    return { buchliste };
+  }
+  if (categorySelect === category) {
+    return { buchliste };
+  }
+});
+
+listAllBook.addEventListener("click", () => {
+  return { refreshList };
+});
+
 saveBook.addEventListener("click", () => {
   if (title.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
   else if (author.value < 1) alert("Name muss mind. 1 Buchstaben beinhalten!");
@@ -70,7 +95,14 @@ function changeBook() {
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ art: artInput.value }),
+      body: JSON.stringify({
+        title: title.value,
+        author: author.value,
+        pages: pages.value,
+        publisher: publisher.value,
+        year: year.value,
+        category: category.value,
+      }),
     }
   )
     .then((res) => res.json())
@@ -105,13 +137,14 @@ window.onload = () => {
 };
 
 function refreshList() {
+  buchliste.innerHTML = "";
   fetch("/books")
     .then((res) => res.json())
     .then((data) => {
       data.forEach((element) => {
-        let newListItem = document.createElement("li");
-        newListItem.innerText = `${element.id}: ${element.author} ${element.title} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-        liste.appendChild(newListItem);
+        let listAllBook = document.createElement("li");
+        listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+        buchliste.appendChild(listAllBook);
       });
     });
 }
