@@ -15,6 +15,10 @@ const listAllBook = document.getElementById("listAll");
 
 // Button Funktionen
 
+//listAllBook.addEventListener("click", () => {
+//  fetch("/books")
+//})
+
 //searchBook.addEventListener("click", () => {
 // fetch("/books" + title.value);
 //});
@@ -46,6 +50,22 @@ saveBook.addEventListener("click", () => {
   alert("Erfolgreich gespeichert!");
 });
 
+deleteBook.addEventListener("click", () => {
+  fetch("/books", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: title.value,
+      author: author.value,
+      pages: pages.value,
+      publisher: publisher.value,
+      year: year.value,
+      category: category.value,
+    }),
+  });
+  alert("Erfolgreich gespeichert!");
+});
+
 // Eingabe Funktionen
 //methodSelect.addEventListener("inputSpace", () => {
 //  if (methodSelect.value == "search") {
@@ -58,7 +78,6 @@ window.onload = () => {
 };
 
 function refreshList() {
-  listAllBook.innerHTML = "";
   fetch("/books")
     .then((res) => res.json())
     .then((data) => {
@@ -71,3 +90,26 @@ function refreshList() {
 }
 
 //suchen auflisten speichern ändern löschen
+// WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aus aufrufen.
+// Mit der Middleware: app.use(express.static(path.join(__dirname, "../frontend"))); starten wir das Frontend stets über das Backand!
+
+//Light-Dark Modus
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("modeSwitch");
+  const body = document.body;
+
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark");
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener("change", () => {
+    body.classList.toggle("dark");
+
+    if (body.classList.contains("dark")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+    }
+  });
+});
