@@ -72,15 +72,6 @@
     "category": "Roman"
   },
   {
-    "id": 9,
-    "title": "test",
-    "author": "test",
-    "pages": "450",
-    "publisher": "test",
-    "year": "1955",
-    "category": "Fantasy"
-  },
-  {
     "id": 10,
     "title": "tra",
     "author": "dsssss",
@@ -88,15 +79,6 @@
     "publisher": "Blabla",
     "year": "1997",
     "category": "Fantasy"
-  },
-  {
-    "id": 11,
-    "title": "testneu",
-    "author": "tester",
-    "pages": "400",
-    "publisher": "disney",
-    "year": "2002",
-    "category": "Biografie"
   },
   {
     "id": 12,
@@ -133,5 +115,14 @@
     "publisher": "drf",
     "year": "1985",
     "category": "Kinderbuch"
+  },
+  {
+    "id": 17,
+    "title": "Die Leiden des jungen Werther",
+    "author": "Johann Wolfgang von Goethe",
+    "pages": "242",
+    "publisher": "kein Verlag",
+    "year": "1772",
+    "category": "Klassiker"
   }
 ]

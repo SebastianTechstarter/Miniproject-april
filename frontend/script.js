@@ -14,7 +14,7 @@ const searchBook = document.getElementById("searchBook");
 const listAllBook = document.getElementById("listAllBook");
 const saveBook = document.getElementById("saveBook");
 const editBook = document.getElementById("editBook");
-const deleteBook = document.getElementById("delete");
+const deleteBook = document.getElementById("deleteBook");
 
 //Light-Dark Modus
 document.addEventListener("DOMContentLoaded", () => {
@@ -59,13 +59,18 @@ searchBook.addEventListener("click", () => {
   if (categorySelect.value) {
     url += "?category=" + categorySelect.value;
   }
+  console.log("url: ", url);
+
   fetch(url, {
     method: "GET",
   })
     .then((res) => res.json())
     .then((data) => {
-      buchliste.innerText = data;
-      buchliste.appendChild(searchBook);
+      data.forEach((element) => {
+        let listAllBook = document.createElement("li");
+        listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+        buchliste.appendChild(listAllBook);
+      });
     });
 });
 // if (buchliste.innerText === "") {
@@ -73,6 +78,8 @@ searchBook.addEventListener("click", () => {
 // }
 
 listAllBook.addEventListener("click", () => {
+  buchliste.innerText = "";
+
   refreshedList.forEach((element) => {
     let listAllBook = document.createElement("li");
     listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
@@ -92,7 +99,6 @@ saveBook.addEventListener("click", () => {
   else if (category.value < 1)
     alert("Name muss mind. 1 Buchstaben beinhalten!");
   else {
-    console.log("Hallo Dennis");
     fetch("/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -161,7 +167,6 @@ deleteBook.addEventListener("click", () => {
   });
 
   fetch(`/books?${params.toString()}`, {
-
     method: "DELETE",
   })
     .then((res) => {
@@ -178,7 +183,6 @@ deleteBook.addEventListener("click", () => {
       alert("Fehler beim Löschen: " + err.message);
     });
 });
-
 
 // Eingabe Funktionen
 //methodSelect.addEventListener("inputSpace", () => {
@@ -198,10 +202,6 @@ function refreshList() {
     .then((data) => {
       data.forEach((element) => {
         refreshedList.push(element);
-        console.log(refreshedList);
-        // let listAllBook = document.createElement("li");
-        // listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-        // buchliste.appendChild(listAllBook);
       });
     });
 }
