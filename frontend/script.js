@@ -6,7 +6,6 @@ const publisherInput = document.getElementById("publisher");
 const yearInput = document.getElementById("year");
 const buchliste = document.getElementById("buchliste");
 const categorySelect = document.getElementById("category");
-
 //Aktuelle Liste
 let refreshedList = [];
 
@@ -39,33 +38,39 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Button Funktionen
-
 searchBook.addEventListener("click", () => {
   buchliste.innerText = "";
-  refreshedList.forEach((element) => {
-    if (titleInput.value === element.title) {
-      let listAllBook = document.createElement("li");
-      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-      buchliste.appendChild(listAllBook);
-    } else if (authorInput.value === element.author) {
-      let listAllBook = document.createElement("li");
-      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-      buchliste.appendChild(listAllBook);
-    } else if (pagesInput.value === element.pages) {
-      let listAllBook = document.createElement("li");
-      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-      buchliste.appendChild(listAllBook);
-    } else if (publisherInput.value === element.publisher) {
-      let listAllBook = document.createElement("li");
-      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-      buchliste.appendChild(listAllBook);
-    } else if (yearInput.value === element.year) {
-      let listAllBook = document.createElement("li");
-      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-      buchliste.appendChild(listAllBook);
-    } //else alert("Für die Suche muss ein Wert angegeben werden");
-  });
+  let url = "/search/books";
+  if (titleInput.value) {
+    url += "?title=" + titleInput.value;
+  }
+  if (authorInput.value) {
+    url += "?author=" + authorInput.value;
+  }
+  if (pagesInput.value) {
+    url += "?pages=" + pagesInput.value;
+  }
+  if (publisherInput.value) {
+    url += "?publisher=" + publisherInput.value;
+  }
+  if (yearInput.value) {
+    url += "?year=" + yearInput.value;
+  }
+  if (categorySelect.value) {
+    url += "?category=" + categorySelect.value;
+  }
+  fetch(url, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      buchliste.innerText = data;
+      buchliste.appendChild(searchBook);
+    });
 });
+// if (buchliste.innerText === "") {
+//   alert("Für die Suche muss ein Wert angegeben werden");
+// }
 
 listAllBook.addEventListener("click", () => {
   refreshedList.forEach((element) => {
@@ -105,48 +110,6 @@ saveBook.addEventListener("click", () => {
   }
 });
 
-function changeBook() {
-  fetch(
-    `/books/${titleInput.value} ${authorInput.value} ${pagesInput.value} ${publisherInput.value} ${yearInput.value}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: title.value,
-        author: author.value,
-        pages: pages.value,
-        publisher: publisher.value,
-        year: year.value,
-        category: category.value,
-      }),
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      title.innerText = JSON.stringify(data);
-      refreshList();
-    });
-  alert("Erfolgreich geäandert!");
-}
-
-function deletedBook() {
-  fetch(`/books/${bookID(titleInput)}`, {
-    method: "DELETE",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      titleInput.innerText = JSON.stringify(data);
-      refreshList();
-    });
-  alert("Erfolgreich entfernt!");
-}
-
-// Eingabe Funktionen
-//methodSelect.addEventListener("inputSpace", () => {
-//  if (methodSelect.value == "search") {
-//    idInput.style.display = "none";
-//  }});
-
 // Browser Aktionen
 window.onload = () => {
   refreshList();
@@ -166,7 +129,3 @@ function refreshList() {
       });
     });
 }
-
-// WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aufrufen.
-// Mit der Middleware: app.use(express.static(path.join(__dirname, "../frontend"))); starten wir das Frontend stets über das Backand!
-// GoLive deaktivieren und in URL-Zeile des Browser nur http://127.0.0.1:5500/ eingeben.
