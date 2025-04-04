@@ -76,6 +76,7 @@ body {
     background-position: right 12px center;
     background-size: 16px;
     padding-right: 40px;
+    align-items: center;
   }
 
   optgroup {
@@ -271,5 +272,9 @@ body {
   
   body.dark .shop-button:hover {
     background-color: rgba(50, 50, 50, 0.95);
+  }
+
+  body.dark .alle-buecher {
+    color: #eee;
   }
   
