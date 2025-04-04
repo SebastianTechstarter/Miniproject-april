@@ -301,4 +301,7 @@ body {
   body.dark .clear-button:hover {
     background-color: #884444;
   }
-    
+  
+  body.dark #buchliste {
+    color: #eee;
+  }
