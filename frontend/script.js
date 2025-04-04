@@ -155,6 +155,15 @@ function refreshList() {
     });
 }
 
+// Clear Button Funktion
+const clearBtn = document.getElementById("clearList");
+
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    buchliste.innerHTML = "";
+  });
+}
+
 // WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aufrufen.
 // Mit der Middleware: app.use(express.static(path.join(__dirname, "../frontend"))); starten wir das Frontend stets über das Backand!
 // GoLive deaktivieren und in URL-Zeile des Browser nur http://127.0.0.1:5500/ eingeben.
