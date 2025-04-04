@@ -76,6 +76,7 @@ body {
     background-position: right 12px center;
     background-size: 16px;
     padding-right: 40px;
+    align-items: center;
   }
 
   optgroup {
@@ -219,6 +220,21 @@ body {
     transform: translateX(24px);
   }
 
+  .clear-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .clear-button:hover {
+    background-color: #f0f0f0;
+  }
+
   /*Dark Mode Style*/
   body.dark {
     color: #eee;
@@ -272,4 +288,17 @@ body {
   body.dark .shop-button:hover {
     background-color: rgba(50, 50, 50, 0.95);
   }
-  
+
+  body.dark .alle-buecher {
+    color: #eee;
+  }
+
+  body.dark .clear-button {
+    background-color: #663333;
+    color: #eee;
+  }
+    
+  body.dark .clear-button:hover {
+    background-color: #884444;
+  }
+    

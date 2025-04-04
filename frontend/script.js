@@ -129,17 +129,51 @@ function changeBook() {
   alert("Erfolgreich geäandert!");
 }
 
-function deletedBook() {
-  fetch(`/books/${bookID(titleInput)}`, {
+deleteBook.addEventListener("click", () => {
+  const title = titleInput.value;
+  const author = authorInput.value;
+  const pages = pagesInput.value;
+  const publisher = publisherInput.value;
+  const year = yearInput.value;
+  const category = categorySelect.value;
+
+  if (!title && !author && !pages && !publisher && !year && !category) {
+    alert("Bitte mindestens ein Feld ausfüllen, um ein Buch zu löschen!");
+    return;
+  }
+
+  if (!confirm("Willst du das Buch wirklich löschen?")) {
+    return;
+  }
+
+  const params = new URLSearchParams({
+    ...(title && { title }),
+    ...(author && { author }),
+    ...(pages && { pages }),
+    ...(publisher && { publisher }),
+    ...(year && { year }),
+    ...(category && { category }),
+  });
+
+  fetch(`/books?${params.toString()}`, {
+
     method: "DELETE",
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Löschen fehlgeschlagen");
+      }
+      return res.json();
+    })
     .then((data) => {
-      titleInput.innerText = JSON.stringify(data);
+      alert(data.message || "Buch gelöscht!");
       refreshList();
+    })
+    .catch((err) => {
+      alert("Fehler beim Löschen: " + err.message);
     });
-  alert("Erfolgreich entfernt!");
-}
+});
+
 
 // Eingabe Funktionen
 //methodSelect.addEventListener("inputSpace", () => {
@@ -165,6 +199,15 @@ function refreshList() {
         // buchliste.appendChild(listAllBook);
       });
     });
+}
+
+// Clear Button Funktion
+const clearBtn = document.getElementById("clearList");
+
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    buchliste.innerHTML = "";
+  });
 }
 
 // WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aufrufen.
