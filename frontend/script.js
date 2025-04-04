@@ -156,6 +156,7 @@ deleteBook.addEventListener("click", () => {
   });
 
   fetch(`/books?${params.toString()}`, {
+
     method: "DELETE",
   })
     .then((res) => {
