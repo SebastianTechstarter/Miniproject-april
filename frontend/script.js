@@ -2,10 +2,13 @@
 const titleInput = document.getElementById("title");
 const authorInput = document.getElementById("author");
 const pagesInput = document.getElementById("pages");
-const publisherInput = document.getElementById("puplisher");
+const publisherInput = document.getElementById("publisher");
 const yearInput = document.getElementById("year");
 const buchliste = document.getElementById("buchliste");
 const categorySelect = document.getElementById("category");
+
+//Aktuelle Liste
+let refreshedList = [];
 
 // Button Variablen
 const searchBook = document.getElementById("searchBook");
@@ -38,33 +41,38 @@ document.addEventListener("DOMContentLoaded", () => {
 // Button Funktionen
 
 searchBook.addEventListener("click", () => {
-  if (titleInput === title) {
-    return { buchliste };
-  } else if (authorInput === author) {
-    return { buchliste };
-  } else if (pagesInput === pages) {
-    return { buchliste };
-  } else if (publisherInput === publisher) {
-    return { buchliste };
-  } else if (yearInput === year) {
-    return { buchliste };
-  } else if (categorySelect === category) {
-    return { buchliste };
-  } else
-    method: "GET",
-      fetch("/books")
-        .then((res) => res.json())
-        .then((data) => {
-          data.forEach((element) => {
-            let listAllBook = document.createElement("li");
-            listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-            buchliste.appendChild(listAllBook);
-          });
-        });
+  buchliste.innerText = "";
+  refreshedList.forEach((element) => {
+    if (titleInput.value === element.title) {
+      let listAllBook = document.createElement("li");
+      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+      buchliste.appendChild(listAllBook);
+    } else if (authorInput.value === element.author) {
+      let listAllBook = document.createElement("li");
+      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+      buchliste.appendChild(listAllBook);
+    } else if (pagesInput.value === element.pages) {
+      let listAllBook = document.createElement("li");
+      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+      buchliste.appendChild(listAllBook);
+    } else if (publisherInput.value === element.publisher) {
+      let listAllBook = document.createElement("li");
+      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+      buchliste.appendChild(listAllBook);
+    } else if (yearInput.value === element.year) {
+      let listAllBook = document.createElement("li");
+      listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+      buchliste.appendChild(listAllBook);
+    } //else alert("Für die Suche muss ein Wert angegeben werden");
+  });
 });
 
 listAllBook.addEventListener("click", () => {
-  return { refreshList };
+  refreshedList.forEach((element) => {
+    let listAllBook = document.createElement("li");
+    listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+    buchliste.appendChild(listAllBook);
+  });
 });
 
 saveBook.addEventListener("click", () => {
@@ -78,9 +86,10 @@ saveBook.addEventListener("click", () => {
     alert("Jahresangabe muss mind. 4 Zahlen beinhalten!");
   else if (category.value < 1)
     alert("Name muss mind. 1 Buchstaben beinhalten!");
-  else
+  else {
+    console.log("Hallo Dennis");
     fetch("/books", {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title.value,
@@ -91,7 +100,9 @@ saveBook.addEventListener("click", () => {
         category: category.value,
       }),
     });
-  alert("Erfolgreich gespeichert!");
+    alert("Erfolgreich gespeichert!");
+    refreshList();
+  }
 });
 
 function changeBook() {
@@ -118,18 +129,50 @@ function changeBook() {
   alert("Erfolgreich geäandert!");
 }
 
-function deletedBook() {
+deleteBook.addEventListener("click", () => {
+  const title = titleInput.value;
+  const author = authorInput.value;
+  const pages = pagesInput.value;
+  const publisher = publisherInput.value;
+  const year = yearInput.value;
+  const category = categorySelect.value;
 
-  fetch(`/books/${bookID(titleInput)}`, {
+  if (!title && !author && !pages && !publisher && !year && !category) {
+    alert("Bitte mindestens ein Feld ausfüllen, um ein Buch zu löschen!");
+    return;
+  }
+
+  if (!confirm("Willst du das Buch wirklich löschen?")) {
+    return;
+  }
+
+  const params = new URLSearchParams({
+    ...(title && { title }),
+    ...(author && { author }),
+    ...(pages && { pages }),
+    ...(publisher && { publisher }),
+    ...(year && { year }),
+    ...(category && { category }),
+  });
+
+  fetch(`/books?${params.toString()}`, {
     method: "DELETE",
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Löschen fehlgeschlagen");
+      }
+      return res.json();
+    })
     .then((data) => {
-      titleInput.innerText = JSON.stringify(data);
+      alert(data.message || "Buch gelöscht!");
       refreshList();
+    })
+    .catch((err) => {
+      alert("Fehler beim Löschen: " + err.message);
     });
-  alert("Erfolgreich entfernt!");
-}
+});
+
 
 // Eingabe Funktionen
 //methodSelect.addEventListener("inputSpace", () => {
@@ -148,9 +191,11 @@ function refreshList() {
     .then((res) => res.json())
     .then((data) => {
       data.forEach((element) => {
-        let listAllBook = document.createElement("li");
-        listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
-        buchliste.appendChild(listAllBook);
+        refreshedList.push(element);
+        console.log(refreshedList);
+        // let listAllBook = document.createElement("li");
+        // listAllBook.innerText = `${element.id}: ${element.title} ${element.author} ${element.pages} ${element.publisher} ${element.year} ${element.category}`;
+        // buchliste.appendChild(listAllBook);
       });
     });
 }
