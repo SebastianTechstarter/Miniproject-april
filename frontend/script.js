@@ -110,6 +110,82 @@ saveBook.addEventListener("click", () => {
   }
 });
 
+function changeBook() {
+  fetch(
+    `/books/${titleInput.value} ${authorInput.value} ${pagesInput.value} ${publisherInput.value} ${yearInput.value}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: title.value,
+        author: author.value,
+        pages: pages.value,
+        publisher: publisher.value,
+        year: year.value,
+        category: category.value,
+      }),
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      title.innerText = JSON.stringify(data);
+      refreshList();
+    });
+  alert("Erfolgreich geäandert!");
+}
+
+deleteBook.addEventListener("click", () => {
+  const title = titleInput.value;
+  const author = authorInput.value;
+  const pages = pagesInput.value;
+  const publisher = publisherInput.value;
+  const year = yearInput.value;
+  const category = categorySelect.value;
+
+  if (!title && !author && !pages && !publisher && !year && !category) {
+    alert("Bitte mindestens ein Feld ausfüllen, um ein Buch zu löschen!");
+    return;
+  }
+
+  if (!confirm("Willst du das Buch wirklich löschen?")) {
+    return;
+  }
+
+  const params = new URLSearchParams({
+    ...(title && { title }),
+    ...(author && { author }),
+    ...(pages && { pages }),
+    ...(publisher && { publisher }),
+    ...(year && { year }),
+    ...(category && { category }),
+  });
+
+  fetch(`/books?${params.toString()}`, {
+
+    method: "DELETE",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Löschen fehlgeschlagen");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      alert(data.message || "Buch gelöscht!");
+      refreshList();
+    })
+    .catch((err) => {
+      alert("Fehler beim Löschen: " + err.message);
+    });
+});
+
+
+// Eingabe Funktionen
+//methodSelect.addEventListener("inputSpace", () => {
+//  if (methodSelect.value == "search") {
+//    idInput.style.display = "none";
+//  }});
+
 // Browser Aktionen
 window.onload = () => {
   refreshList();
@@ -129,3 +205,16 @@ function refreshList() {
       });
     });
 }
+
+// Clear Button Funktion
+const clearBtn = document.getElementById("clearList");
+
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    buchliste.innerHTML = "";
+  });
+}
+
+// WICHTIG!!! Nach jedem Merge die Website im Frontend auf Backend-Port manuell einstellen und von dort aufrufen.
+// Mit der Middleware: app.use(express.static(path.join(__dirname, "../frontend"))); starten wir das Frontend stets über das Backand!
+// GoLive deaktivieren und in URL-Zeile des Browser nur http://127.0.0.1:5500/ eingeben.

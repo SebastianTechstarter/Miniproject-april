@@ -1,3 +1,5 @@
+- Sortierfunktion, sodass die gesamte Auflistung nach einzelnen Kriterien sortiert werden kann
+- "Löschen"-Button neben jedes aufgelistetes Buch als zusätzliche Löschfunktion
 - Erweiterung: Pricing-System (Buchshop)
 - Verleihfunktion
 - Login-Funktion
