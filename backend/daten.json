@@ -36,15 +36,6 @@
     "category": "Roman"
   },
   {
-    "id": 5,
-    "title": "dr",
-    "author": "srtz",
-    "pages": "450",
-    "publisher": "Blabla",
-    "year": "1652",
-    "category": "Roman"
-  },
-  {
     "id": 6,
     "title": "es",
     "author": "sert",
@@ -88,15 +79,6 @@
     "publisher": "Blabla",
     "year": "2002",
     "category": "Kinderbuch"
-  },
-  {
-    "id": 13,
-    "title": "dddddd",
-    "author": "dddddddd",
-    "pages": "450",
-    "publisher": "Blabla",
-    "year": "1985",
-    "category": "Roman"
   },
   {
     "id": 14,

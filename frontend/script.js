@@ -196,6 +196,7 @@ window.onload = () => {
 };
 
 function refreshList() {
+  refreshedList = [];
   buchliste.innerHTML = "";
   fetch("/books")
     .then((res) => res.json())
