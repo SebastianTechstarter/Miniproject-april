@@ -116,29 +116,34 @@ saveBook.addEventListener("click", () => {
   }
 });
 
-function changeBook() {
-  fetch(
-    `/books/${titleInput.value} ${authorInput.value} ${pagesInput.value} ${publisherInput.value} ${yearInput.value}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: title.value,
-        author: author.value,
-        pages: pages.value,
-        publisher: publisher.value,
-        year: year.value,
-        category: category.value,
-      }),
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      title.innerText = JSON.stringify(data);
-      refreshList();
-    });
-  alert("Erfolgreich geäandert!");
-}
+// function changeBook() {
+//   fetch(
+//     `/books/${titleInput.value} ${authorInput.value} ${pagesInput.value} ${publisherInput.value} ${yearInput.value}`,
+//     {
+//       method: "PUT",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         title: title.value,
+//         author: author.value,
+//         pages: pages.value,
+//         publisher: publisher.value,
+//         year: year.value,
+//         category: category.value,
+//       }),
+//     }
+//   )
+//     .then((res) => res.json())
+//     .then((data) => {
+//       title.innerText = JSON.stringify(data);
+//       refreshList();
+//     });
+//   alert("Erfolgreich geäandert!");
+// }
+
+editBook.addEventListener("click", () => {
+  alert("Die Bearbeiten-Funktion steht dir bald zur Verfügung. ✨");
+});
+
 
 deleteBook.addEventListener("click", () => {
   const title = titleInput.value;
